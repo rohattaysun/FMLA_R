@@ -135,4 +135,43 @@ pelt %>%
 
 #SEASONAL PLOTS
 
+a10 %>% gg_season(total_cost, labels = "both") +
+  labs(y = "$ million", title = "Seasonal plot: antidiabetic drug sales")
 
+#Subseries
+a10 %>%
+  gg_subseries(total_cost) +
+  labs(y = "$ million", title = "Subseries plot: antidiabetic drug sales")
+
+# Quarterly
+
+beer <- aus_production %>%
+  select(Quarter, Beer) %>%
+  filter(year(Quarter) >= 1992)
+beer %>% autoplot(Beer)
+
+ls()
+
+beer %>% gg_season(Beer, labels = "right")
+beer %>% gg_subseries(Beer)
+
+
+
+
+#SCATTERPLOTS
+
+vic_elec %>%
+  filter(year(Time) == 2014) %>%
+  autoplot(Demand) +
+  labs(y = "GW",
+       title = "Half-hourly electricity demand: Victoria")
+
+
+Temperature Demand
+vic_elec %>%
+  filter(year(Time) == 2014) %>%
+  autoplot(Temperature) +
+  labs(
+    y = "Degrees Celsius",
+    title = "Half-hourly temperatures: Melbourne, Australia"
+  )
