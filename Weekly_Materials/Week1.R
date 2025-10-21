@@ -167,7 +167,7 @@ vic_elec %>%
        title = "Half-hourly electricity demand: Victoria")
 
 
-Temperature Demand
+#Temperature Demand
 vic_elec %>%
   filter(year(Time) == 2014) %>%
   autoplot(Temperature) +
@@ -175,3 +175,69 @@ vic_elec %>%
     y = "Degrees Celsius",
     title = "Half-hourly temperatures: Melbourne, Australia"
   )
+
+
+vic_elec %>%
+  filter(year(Time) == 2014) %>%
+  ggplot(aes(x = Temperature, y = Demand)) +
+  geom_point() +
+  labs(x = "Temperature (degrees Celsius)",
+       y = "Electricity demand (GW)")
+
+View(vic_elec)
+
+vic_elec %>%
+  filter(year(Time) == 2012) %>%
+  ggplot(aes(x = Temperature, y = Demand)) +
+  geom_point() +
+  labs(x = "Temperature (degrees Celsius)",
+       y = "Electricity demand (GW)")
+
+
+
+visitors <- tourism %>%
+  group_by(State) %>%
+  summarise(Trips = sum(Trips))
+
+visitors %>%
+  ggplot(aes(x = Quarter, y = Trips)) +
+  geom_line() +
+  facet_grid(vars(State), scales = "free_y") +
+  labs(title = "Australian domestic tourism",
+       y= "Overnight trips ('000)")
+
+visitors %>%
+  pivot_wider(values_from=Trips, names_from=State) %>%
+  GGally::ggpairs(columns = 2:9)
+
+
+new_production <- aus_production %>%
+  filter(year(Quarter) >= 1992)
+new_production
+
+new_production %>%
+  autoplot(Bricks)
+
+ls()
+library(dplyr)
+aus_retail %>%
+  filter( 
+    State == "Victoria", 
+    Industry == "Cafes, restaurants and catering services"
+    ) %>% 
+  gg_lag(Turnover)
+
+
+new_production
+
+new_production %>% gg_lag(Beer)
+new_production %>% gg_lag(Beer, geom = 'point')
+
+View(new_production)
+
+n1 <- new_production %>% gg_lag(Gas, geom = 'point')
+
+n1
+
+n1 + theme_dark()
+
